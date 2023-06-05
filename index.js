@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 
 
 // Adres e-mail i hasło do konta, z którego będziemy wysyłać wiadomości
+console.log('Aplikacja uruchomiona...')
 const email = process.env.EMAIL;
 const password = process.env.PASSWORD;
 
@@ -56,6 +57,7 @@ async function getPrice() {
 
 // Funkcja do sprawdzania ceny co minutę i wysyłania wiadomości e-mail
 async function checkPrice() {
+  console.log(`Sprawdzam cene...`);
   const price = await getPrice();
   console.log(`Aktualna cena: ${price}`);
   await sendEmail(price);
