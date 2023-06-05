@@ -16,6 +16,9 @@ async function sendEmail(price) {
   // Utwórz transporter do wysyłki wiadomości
   const transporter = nodemailer.createTransport({
     service: 'gmail',
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true, // use TLS
     auth: {
       user: email,
       pass: password,
