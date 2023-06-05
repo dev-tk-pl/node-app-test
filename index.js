@@ -64,8 +64,8 @@ async function checkPrice() {
 }
 
 // Uruchom funkcję sprawdzania ceny co minutę
-setInterval(checkPrice, 60000);
-// setInterval(checkPrice, 3600000);
+// setInterval(checkPrice, 60000);
+setInterval(checkPrice, 3600000);
 
 
 
