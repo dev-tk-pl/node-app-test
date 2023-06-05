@@ -1,0 +1,9 @@
+server {
+  listen 80;
+  server_name example.com; // Zmień na właściwą nazwę domeny lub adres IP serwera
+
+  location / {
+    root /ścieżka/do/folderu/apps/checkPriceApp; // Zmień na właściwą ścieżkę do folderu zawierającego app.js
+    index app.js;
+  }
+}
