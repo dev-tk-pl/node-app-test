@@ -13,57 +13,57 @@ const recipient = process.env.EMAIL;
 
 // Funkcja do wysyłania wiadomości e-mail
 async function sendEmail(price) {
-  // Utwórz transporter do wysyłki wiadomości
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // use TLS
-    auth: {
-      user: email,
-      pass: password,
-    },
-  });
+    // Utwórz transporter do wysyłki wiadomości
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true, // use TLS
+        auth: {
+            user: email,
+            pass: password,
+        },
+    });
 
-  // Utwórz zawartość wiadomości
-  const mailOptions = {
-    from: email,
-    to: recipient,
-    subject: 'Aktualna cena produktu',
-    text: `Dysk SSD Lexar NM620 2TB: ${price}`,
-  };
+    // Utwórz zawartość wiadomości
+    const mailOptions = {
+        from: email,
+        to: recipient,
+        subject: 'Aktualna cena produktu',
+        text: `Monitor AOC C24G2AE/BK: ${price}`,
+    };
 
-  // Wyślij wiadomość
-  await transporter.sendMail(mailOptions);
-  console.log('E-mail został wysłany!');
+    // Wyślij wiadomość
+    await transporter.sendMail(mailOptions);
+    console.log('E-mail został wysłany!');
 }
 
 // Funkcja do pobierania ceny ze strony internetowej
 async function getPrice() {
-  const browser = await puppeteer.launch({ headless: "new" });
-  const page = await browser.newPage();
-  await page.goto(process.env.PRODUCT_PAGE);
+    const browser = await puppeteer.launch({ headless: "new" });
+    const page = await browser.newPage();
+    await page.goto(process.env.PRODUCT_PAGE);
 
-  // Poczekaj na załadowanie się strony
-  await page.waitForSelector('#product_price_brutto');
+    // Poczekaj na załadowanie się strony
+    await page.waitForSelector('#product_price_brutto');
 
-  // Pobierz cenę ze strony
-  const priceElement = await page.$('#product_price_brutto');
-  console.log('pobieram dane...')
-  const price = await page.evaluate(element => element.textContent, priceElement);
+    // Pobierz cenę ze strony
+    const priceElement = await page.$('#product_price_brutto');
+    console.log('pobieram dane...')
+    const price = await page.evaluate(element => element.textContent, priceElement);
 
-  // Zamknij przeglądarkę
-  await browser.close();
+    // Zamknij przeglądarkę
+    await browser.close();
 
-  return price;
+    return price;
 }
 
 // Funkcja do sprawdzania ceny co minutę i wysyłania wiadomości e-mail
 async function checkPrice() {
-  console.log(`Sprawdzam cene...`);
-  const price = await getPrice();
-  console.log(`Aktualna cena: ${price}`);
-  await sendEmail(price);
+    console.log(`Sprawdzam cene...`);
+    const price = await getPrice();
+    console.log(`Aktualna cena: ${price}`);
+    await sendEmail(price);
 }
 
 // Uruchom funkcję sprawdzania ceny co minutę
